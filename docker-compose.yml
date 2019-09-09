@@ -1,0 +1,54 @@
+version: "2.1"
+
+services:
+
+  nginx:
+    depends_on:
+      - php
+      - mariadb
+    image: mdoerges/debian-buster-nginx
+    restart: always
+    ports:
+      - 80:80
+# Comment out for https
+#      - 443:443
+    networks:
+      - default
+    volumes:
+      - /path/to/webroot:/var/www/html
+# Comment out for Let's Encrypt
+#      - /path/to/webroot/letsencrypt:/var/www/letsencrypt
+      - /path/to/nginx-conf/site.conf:/etc/nginx/conf.d/site.conf:ro
+# Comment out for Let's Encrypt files
+#      - /path/to/nginx-conf/letsencrypt:/etc/nginx/ssl:ro
+    container_name: nginx
+
+  php:
+    image: mdoerges/debian-buster-php73
+    restart: always
+    networks:
+      - default
+    expose:
+      - "9000"
+    volumes:
+      - /path/to/webroot:/var/www/html
+    container_name: php
+
+  mariadb:
+    image: mariadb:10.1
+    restart: always
+    networks:
+      - default
+    expose:
+      - "3306"
+    volumes:
+      - /path/to/mysql:/var/lib/mysql
+# Comment out to import a db dump      
+#      - /path/to/import.sql:/docker-entrypoint-initdb.d/import.sql
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: pictures
+      MYSQL_USER: pictures
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    container_name: mariadb
+    
