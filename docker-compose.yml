@@ -10,16 +10,16 @@ services:
     restart: always
     ports:
       - 80:80
-# Comment out for https
+# Uncomment for https
 #      - 443:443
     networks:
       - default
     volumes:
       - /path/to/webroot:/var/www/html
-# Comment out for Let's Encrypt
+# Uncomment for Let's Encrypt
 #      - /path/to/webroot/letsencrypt:/var/www/letsencrypt
       - /path/to/nginx-conf/site.conf:/etc/nginx/conf.d/site.conf:ro
-# Comment out for Let's Encrypt files
+# Uncomment for Let's Encrypt files
 #      - /path/to/nginx-conf/letsencrypt:/etc/nginx/ssl:ro
     container_name: nginx
 
@@ -43,7 +43,7 @@ services:
       - "3306"
     volumes:
       - /path/to/mysql:/var/lib/mysql
-# Comment out to import a db dump      
+# Uncomment to import a db dump      
 #      - /path/to/import.sql:/docker-entrypoint-initdb.d/import.sql
     environment:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
