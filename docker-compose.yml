@@ -24,7 +24,7 @@ services:
     container_name: nginx
 
   php:
-    image: mdoerges/debian-buster-php73
+    image: mdoerges/debian-bookworm-php81
     restart: always
     networks:
       - default
@@ -35,7 +35,7 @@ services:
     container_name: php
 
   mariadb:
-    image: mariadb:10.1
+    image: mariadb:10.5
     restart: always
     networks:
       - default
